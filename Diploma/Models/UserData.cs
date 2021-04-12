@@ -8,8 +8,8 @@ namespace Diploma.Models
 {
     class UserData
     {
-        public long recordId { get; set; }
-        public long userId { get; set; }
+        public int recordId { get; set; }
+        public int userId { get; set; }
         public virtual User user { get; set; }
         public string path { get; set; }
         public string name { get; set; }
