@@ -26,7 +26,7 @@ namespace Diploma
         public FormMain()
         {
             InitializeComponent();
-           
+
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -51,12 +51,20 @@ namespace Diploma
         /// </summary>
         private void StartSetings()
         {
-            dataGridViewMain.RowTemplate.Height = 40; // Устанавливает высоту строки
-            dataGridViewMain.RowHeadersVisible = false; // Удаляет леввый столбец в отображении таблиц
-            dataGridViewMain.DefaultCellStyle.SelectionBackColor = Color.White; // Устанавливает цвет выбранной ячейки
-            dataGridViewMain.AllowUserToResizeColumns = false; // Запрещает изменение размера стобца
-            dataGridViewMain.AllowUserToResizeRows = false; // Запрещает изменение размера строки
-            dataGridViewMain.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 14); // Устанавливает размер и тип текста
+
+            try
+            {
+                dataGridViewMain.RowTemplate.Height = 40; // Устанавливает высоту строки
+                dataGridViewMain.RowHeadersVisible = false; // Удаляет леввый столбец в отображении таблиц
+                dataGridViewMain.DefaultCellStyle.SelectionBackColor = Color.White; // Устанавливает цвет выбранной ячейки
+                dataGridViewMain.AllowUserToResizeColumns = false; // Запрещает изменение размера стобца
+                dataGridViewMain.AllowUserToResizeRows = false; // Запрещает изменение размера строки
+                dataGridViewMain.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 14); // Устанавливает размер и тип текста
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -64,26 +72,33 @@ namespace Diploma
         /// </summary>
         private void dataGridViewRowAndCellsSettings()
         {
-            for (int i = 0; i < dataGridViewMain.Rows.Count; i++)
+            try
             {
-                for (int j = 0; j < dataGridViewMain.ColumnCount; j++)
+                for (int i = 0; i < dataGridViewMain.Rows.Count; i++)
                 {
-                    dataGridViewMain.Rows[i].Cells[j].ReadOnly = true;
+                    for (int j = 0; j < dataGridViewMain.ColumnCount; j++)
+                    {
+                        dataGridViewMain.Rows[i].Cells[j].ReadOnly = true;
+                    }
                 }
-            }
+                for (int i = 0; i < dataGridViewMain.Rows.Count; i++)
+                {
+                    DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
+                    linkCell.LinkColor = Color.Black; // Устанавливает черный цвет для текста
+                    dataGridViewMain[1, i] = linkCell;
+                }
+                for (int i = 0; i < dataGridViewMain.Rows.Count; i++)
+                {
+                    DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
+                    linkCell.LinkColor = Color.Black;
+                    dataGridViewMain[0, i] = linkCell;
+                    dataGridViewMain[0, i].Style.Alignment = DataGridViewContentAlignment.MiddleLeft; // Устанавливает текст слева, а для другого столбца в конструкторе установленно на центр
+                }
 
-            for (int i = 0; i < dataGridViewMain.Rows.Count; i++)
-            {
-                DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                linkCell.LinkColor = Color.Black; // Устанавливает черный цвет для текста
-                dataGridViewMain[1, i] = linkCell;
             }
-            for (int i = 0; i < dataGridViewMain.Rows.Count; i++)
+            catch (Exception ex)
             {
-                DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                linkCell.LinkColor = Color.Black;
-                dataGridViewMain[0, i] = linkCell;
-                dataGridViewMain[0, i].Style.Alignment = DataGridViewContentAlignment.MiddleLeft; // Устанавливает текст слева, а для другого столбца в конструкторе установленно на центр
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -92,12 +107,36 @@ namespace Diploma
         /// </summary>
         private void ShowData(SqlConnection sqlConnection)
         {
-            sqlDataAdapter = new SqlDataAdapter("Select name as [Название],'Удалить' as [Удалить] from userDatas where userId = 1", sqlConnection);
-            sqlBuilder = new SqlCommandBuilder(sqlDataAdapter);
-            dataSet = new DataSet();
-            sqlDataAdapter.Fill(dataSet, "UserData");
-            dataGridViewMain.DataSource = dataSet.Tables["UserData"];
-            dataGridViewRowAndCellsSettings();
+            try
+            {
+                sqlDataAdapter = new SqlDataAdapter("Select name as [Название],'Удалить' as [Удалить] from userDatas where userId = 1", sqlConnection);
+                sqlBuilder = new SqlCommandBuilder(sqlDataAdapter);
+                dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet, "UserData");
+                dataGridViewMain.DataSource = dataSet.Tables["UserData"];
+                dataGridViewRowAndCellsSettings();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        /// <summary>
+        /// Метод для обновления данных
+        /// </summary>
+        private void ReloadData()
+        {
+            try
+            {
+                dataSet.Tables["UserData"].Clear();
+                sqlDataAdapter.Fill(dataSet, "UserData");
+                dataGridViewMain.DataSource = dataSet.Tables["UserData"];
+                dataGridViewRowAndCellsSettings();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -130,13 +169,13 @@ namespace Diploma
 
                 }
             }
-            catch (SecurityException)
+            catch (SecurityException ex)
             {
-                MessageBox.Show("Доступ запрещен");
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Доступ запрещен");
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -145,11 +184,19 @@ namespace Diploma
         /// </summary>
         private void FolderBrowserDialogShow()
         {
-            FolderBrowserDialog FBD = new FolderBrowserDialog();
-            FBD.ShowNewFolderButton = false;
-            if (FBD.ShowDialog() == DialogResult.OK)
+            try
             {
-                AddData(FBD);
+                FolderBrowserDialog FBD = new FolderBrowserDialog();
+                FBD.ShowNewFolderButton = false;
+                if (FBD.ShowDialog() == DialogResult.OK)
+                {
+                    AddData(FBD);
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
