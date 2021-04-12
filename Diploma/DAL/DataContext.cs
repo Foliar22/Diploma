@@ -1,10 +1,12 @@
 ﻿using Diploma.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Diploma.DAL
 {
@@ -21,7 +23,8 @@ namespace Diploma.DAL
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=COMPUTER;Initial Catalog=Diploma;Integrated Security=True");
+            var connectionString = ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
     }
