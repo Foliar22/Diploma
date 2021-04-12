@@ -45,12 +45,17 @@ namespace Diploma
             this.panelMain.Controls.Add(this.dataGridViewMain);
             this.panelMain.Location = new System.Drawing.Point(0, 46);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(800, 373);
+            this.panelMain.Size = new System.Drawing.Size(800, 405);
             this.panelMain.TabIndex = 0;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(69, 13);
+            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdd.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAdd.Location = new System.Drawing.Point(12, 12);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(130, 23);
             this.buttonAdd.TabIndex = 1;
@@ -79,8 +84,9 @@ namespace Diploma
             this.dataGridViewMain.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewMain.Name = "dataGridViewMain";
             this.dataGridViewMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            this.dataGridViewMain.Size = new System.Drawing.Size(800, 373);
+            this.dataGridViewMain.Size = new System.Drawing.Size(800, 405);
             this.dataGridViewMain.TabIndex = 0;
+            this.dataGridViewMain.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMain_CellContentClick);
             // 
             // FormMain
             // 
