@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Diploma.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,8 +25,7 @@ namespace Diploma.Migrations
                 name: "userDatas",
                 columns: table => new
                 {
-                    recordId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    recordId = table.Column<Guid>(nullable: false),
                     userId = table.Column<int>(nullable: false),
                     path = table.Column<string>(nullable: true),
                     name = table.Column<string>(nullable: true)
@@ -40,6 +40,13 @@ namespace Diploma.Migrations
                         principalColumn: "userId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_userDatas_name",
+                table: "userDatas",
+                column: "name",
+                unique: true,
+                filter: "[name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_userDatas_userId",

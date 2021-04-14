@@ -188,13 +188,17 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20210412125202_FirstMigration.cs" />
-    <Compile Include="Migrations\20210412125202_FirstMigration.designer.cs">
-      <DependentUpon>20210412125202_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20210414031804_First.cs" />
+    <Compile Include="Migrations\20210414031804_First.designer.cs">
+      <DependentUpon>20210414031804_First.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20210414010820_UniquFild.cs" />
-    <Compile Include="Migrations\20210414010820_UniquFild.designer.cs">
-      <DependentUpon>20210414010820_UniquFild.cs</DependentUpon>
+    <Compile Include="Migrations\20210414032445_Two.cs" />
+    <Compile Include="Migrations\20210414032445_Two.designer.cs">
+      <DependentUpon>20210414032445_Two.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210414032754_Fics.cs" />
+    <Compile Include="Migrations\20210414032754_Fics.designer.cs">
+      <DependentUpon>20210414032754_Fics.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DataContextModelSnapshot.cs" />
     <Compile Include="Models\User.cs" />
