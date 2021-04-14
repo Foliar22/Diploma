@@ -9,6 +9,7 @@ using Diploma.DAL;
 using Diploma.Models;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace Diploma
 {
@@ -36,6 +37,33 @@ namespace Diploma
         }
 
         /// <summary>
+        /// Проверяет является ли имя приложения новым
+        /// </summary>
+        /// <returns>
+        /// Лист строк пути к новым приложениям
+        /// </returns>
+        private List<string> CheckForUniqueness(List<UserData> userDatas, string[] exeArr)
+        {
+            foreach (var userData in userDatas)
+            {
+                for (var i = 0; i < exeArr.Length; i++)
+                {
+                    if (exeArr[i] != "")
+                    {
+                        FileInfo fileInfo = new FileInfo(exeArr[i]);
+                        if (fileInfo.Name == userData.name)
+                        {
+                            exeArr[i] = "";
+                        }
+                    }
+                }
+            }
+            var exeList = exeArr.ToList();
+            exeList.RemoveAll(string.IsNullOrWhiteSpace);
+            return exeList;         
+        }
+         
+        /// <summary>
         /// Метод добавляющий данные в таблицу userDatas
         /// </summary>
         private void AddData(FolderBrowserDialog FBD)
@@ -44,24 +72,30 @@ namespace Diploma
             var path = FBD.SelectedPath;
             try
             {
-                foreach (var findedFile in Directory.EnumerateFiles(path, likeExe, SearchOption.AllDirectories))
+                using (DataContext context = new DataContext())
                 {
-                    FileInfo fileInfo = new FileInfo(findedFile);
-                    using (DataContext context = new DataContext())
+                    var user = context.users.Where(u => u.userId == userId).FirstOrDefault();
+                    var userDatas = context.userDatas.Where(u => u.userId == userId).ToList();
+                    var exeArr = Directory.EnumerateFiles(path, likeExe, SearchOption.AllDirectories).ToArray();
+                    List<string> exeList = CheckForUniqueness(userDatas, exeArr);
+                    if (exeList.Count != 0)
                     {
-                        var user = context.users.Where(u => u.userId == 1).FirstOrDefault();
-                        UserData userData = new UserData()
+                        foreach (var file in exeList)
                         {
-                            userId = userId,
-                            name = fileInfo.Name,
-                            path = fileInfo.FullName,
-                            user = user
+                            FileInfo fileInfo = new FileInfo(file);
+                            var UD = new UserData()
+                            {
+                                userId = userId,
+                                name = fileInfo.Name,
+                                path = fileInfo.FullName,
+                                user = user
 
-                        };
-                        context.userDatas.Add(userData);
-                        context.SaveChanges();
+                            };
+                            context.userDatas.Add(UD);
+                            context.SaveChanges();
+                        }
+
                     }
-
                 }
             }
             catch (SecurityException ex)
@@ -195,7 +229,7 @@ namespace Diploma
                 Proc.StartInfo.FileName = path;
                 Proc.Start();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

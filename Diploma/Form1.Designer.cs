@@ -29,10 +29,10 @@ namespace Diploma
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.buttonAdd = new System.Windows.Forms.Button();
             this.dataGridViewMain = new System.Windows.Forms.DataGridView();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMain)).BeginInit();
             this.SuspendLayout();
@@ -48,11 +48,33 @@ namespace Diploma
             this.panelMain.Size = new System.Drawing.Size(800, 405);
             this.panelMain.TabIndex = 0;
             // 
+            // dataGridViewMain
+            // 
+            this.dataGridViewMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewMain.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dataGridViewMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridViewMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dataGridViewMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMain.ColumnHeadersVisible = false;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewMain.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewMain.GridColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dataGridViewMain.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewMain.Name = "dataGridViewMain";
+            this.dataGridViewMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            this.dataGridViewMain.Size = new System.Drawing.Size(800, 405);
+            this.dataGridViewMain.TabIndex = 0;
+            this.dataGridViewMain.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMain_CellContentClick);
+            // 
             // buttonAdd
             // 
-            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Location = new System.Drawing.Point(12, 12);
@@ -62,31 +84,6 @@ namespace Diploma
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
-            // dataGridViewMain
-            // 
-            this.dataGridViewMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewMain.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dataGridViewMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridViewMain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dataGridViewMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewMain.ColumnHeadersVisible = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewMain.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewMain.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dataGridViewMain.Location = new System.Drawing.Point(0, 0);
-            this.dataGridViewMain.Name = "dataGridViewMain";
-            this.dataGridViewMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            this.dataGridViewMain.Size = new System.Drawing.Size(800, 405);
-            this.dataGridViewMain.TabIndex = 0;
-            this.dataGridViewMain.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMain_CellContentClick);
             // 
             // FormMain
             // 

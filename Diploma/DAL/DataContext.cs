@@ -19,6 +19,7 @@ namespace Diploma.DAL
             modelBuilder.Entity<User>().HasKey(k => k.userId);
             modelBuilder.Entity<UserData>().HasKey(k => k.recordId);
             modelBuilder.Entity<User>().HasMany(ud => ud.UserDatas).WithOne(u => u.user).HasForeignKey(pt => pt.userId);
+            modelBuilder.Entity<UserData>().HasIndex(u => new { u.name }).IsUnique();
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
