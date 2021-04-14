@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Diploma.Forms;
+using System;
 using System.Windows.Forms;
 
 namespace Diploma
@@ -16,7 +14,24 @@ namespace Diploma
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+        // Application.Run(new Authorization());
+        Start:
+            using (var loginForm = new Authorization())
+            {
+                if (loginForm.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+            }
+            using (var mainFrom = new FormMain())
+            {
+                if (mainFrom.ShowDialog() == DialogResult.Cancel)
+                {
+                    goto Start;
+                }
+            }
+
         }
     }
 }
