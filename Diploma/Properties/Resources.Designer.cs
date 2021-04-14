@@ -71,6 +71,16 @@ namespace Diploma.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon collaborator_theapplication_theuser_2910 {
+            get {
+                object obj = ResourceManager.GetObject("collaborator_theapplication_theuser_2910", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap user {

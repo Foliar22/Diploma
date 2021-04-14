@@ -19,7 +19,7 @@ namespace Diploma
         private SqlDataAdapter sqlDataAdapter { get; set; }
         private DataSet dataSet { get; set; }
         private string connectionString { get; set; }
-        private int userId { get; set; } = 1; // Будем передовать сюда userId
+        private int userId { get; set; } = UserID.userId; // Будем передовать сюда userId
         public FormMain()
         {
             InitializeComponent();
@@ -300,7 +300,7 @@ namespace Diploma
         }
 
         /// <summary>
-        /// Метод для обновления данных
+        /// Метод для обновления данных в DataGriedView
         /// </summary>
         private void ReloadData()
         {
@@ -315,6 +315,14 @@ namespace Diploma
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Метод для обработки закрытия формы
+        /// </summary>
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }
