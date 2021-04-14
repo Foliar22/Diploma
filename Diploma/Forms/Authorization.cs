@@ -100,31 +100,44 @@ namespace Diploma.Forms
             }
         }
         #endregion
+        #region Button
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             if (PasswordField.Text != "Введите пароль" && LoginField.Text != "Введите логин"
                 && PasswordField.Text != "" && LoginField.Text != "")
             {
-                using (DataContext context = new DataContext())
+                try
                 {
-                    var log = LoginField.Text;
-                    var pas = PasswordField.Text;
-                    var user = context.users.Where(u => u.login == log && u.password == pas).FirstOrDefault();
-                    if(user != null)
+                    using (DataContext context = new DataContext())
                     {
-                        MessageBox.Show($"Добро пожаловать!\n{log}");
-                        DialogResult = DialogResult.OK;
-                        UserID.userId = user.userId;
+                        var log = LoginField.Text;
+                        var pas = PasswordField.Text;
+                        var user = context.users.Where(u => u.login == log && u.password == pas).FirstOrDefault();
+                        if (user != null)
+                        {
+                            MessageBox.Show($"Добро пожаловать!\n{log}");
+                            DialogResult = DialogResult.OK;
+                            UserID.userId = user.userId;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Введен не правильнй логин или пароль");
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show($"Введен не правильнй логин или пароль");
-                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
         }
 
-
+        private void buttonRegistration_Click(object sender, EventArgs e)
+        {
+            Registration regForm = new Registration();
+            regForm.Show();
+        }
+        #endregion
     }
 }

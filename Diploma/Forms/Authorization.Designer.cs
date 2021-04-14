@@ -110,6 +110,7 @@ namespace Diploma.Forms
             this.buttonRegistration.TabIndex = 7;
             this.buttonRegistration.Text = "Зарегистрироваться";
             this.buttonRegistration.UseVisualStyleBackColor = true;
+            this.buttonRegistration.Click += new System.EventHandler(this.buttonRegistration_Click);
             // 
             // pictureBoxLogin
             // 
@@ -135,7 +136,9 @@ namespace Diploma.Forms
             this.Controls.Add(this.buttonLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(516, 489);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(516, 489);
             this.Name = "Authorization";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
