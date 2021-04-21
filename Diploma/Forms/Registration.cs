@@ -19,8 +19,6 @@ namespace Diploma.Forms
         {
             InitializeComponent();
             StartSetings();
-
-
         }
         private void StartSetings()
         {
@@ -84,6 +82,7 @@ namespace Diploma.Forms
                 PasswordField.UseSystemPasswordChar = false;
                 PasswordField.Text = "Введите пароль";
                 PasswordField.ForeColor = Color.Gray;
+                MessageBox.Show("Введите пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 buttonRegistration.Enabled = false;
             }
         }
@@ -92,8 +91,9 @@ namespace Diploma.Forms
             if (PasswordRepeatField.Text == "")
             {
                 PasswordRepeatField.UseSystemPasswordChar = false;
-                PasswordRepeatField.Text = "Введите пароль";
+                PasswordRepeatField.Text = "Повторите пароль";
                 PasswordRepeatField.ForeColor = Color.Gray;
+                MessageBox.Show("Повторите пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 buttonRegistration.Enabled = false;
             }
         }
@@ -166,45 +166,63 @@ namespace Diploma.Forms
         /// <summary>
         /// Метод для проверки уникальности логина
         /// </summary>
-        private void UniquenessCheck()
+        private bool UniquenessCheck(string login)
         {
+            bool res = true;
             using (DataContext context = new DataContext())
             {
-                var user = context.users.Where(u => u.login == LoginField.Text).FirstOrDefault();
+                var user = context.users.Where(u => u.login == login).FirstOrDefault();
                 if (user != null)
                 {
-                    MessageBox.Show("Логин занят", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    buttonRegistration.Enabled = false;
-                    LoginField.Focus();
+                   if(String.Equals(user.login, login))
+                    {
+                        MessageBox.Show("Логин занят", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        LoginField.Focus();
+                        return res = false;
+                    }
+
                 }
             }
+            return res;
         }
         private void buttonRegistration_Click(object sender, EventArgs e)
         {
-            UniquenessCheck();
-            if (PasswordField.Text != PasswordRepeatField.Text)
+            if (LoginField.Text != "Введите логин")
             {
-                MessageBox.Show("Пароли не совпадают", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                PasswordRepeatField.Focus();
-            }
-            try
-            {
-                using(DataContext context = new DataContext())
+                if (UniquenessCheck(LoginField.Text) == true)
                 {
-                    var newUser = new User()
+                    if (!String.Equals(PasswordField.Text,PasswordRepeatField.Text))
                     {
-                        login = LoginField.Text,
-                        password = PasswordField.Text
-                    };
-                    context.users.Add(newUser);
-                    context.SaveChanges();
+                        MessageBox.Show("Пароли не совпадают", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        PasswordRepeatField.Focus();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            using (DataContext context = new DataContext())
+                            {
+                                var newUser = new User()
+                                {
+                                    login = LoginField.Text,
+                                    password = PasswordField.Text
+                                };
+                                context.users.Add(newUser);
+                                context.SaveChanges();
+                            }
+                            MessageBox.Show("Регистрация прошла успешно ", "Завершение регистрации", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
-                MessageBox.Show("Регистрация прошла успешно ", "Завершение регистрации", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите логин", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
