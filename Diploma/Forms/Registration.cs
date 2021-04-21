@@ -34,13 +34,6 @@ namespace Diploma.Forms
             PasswordRepeatField.ForeColor = Color.Gray;
             buttonRegistration.Enabled = false;
         }
-        private List<User> GetListUser()
-        {
-            using (var context = new DataContext())
-            {
-                return context.users.ToList();
-            }
-        }
         #region FieldEnter
         private void LoginField_Enter(object sender, EventArgs e)
         {

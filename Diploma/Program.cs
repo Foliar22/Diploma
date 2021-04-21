@@ -14,7 +14,6 @@ namespace Diploma
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-        // Application.Run(new Authorization());
         Start:
             using (var loginForm = new Authorization())
             {
