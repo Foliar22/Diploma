@@ -2,13 +2,8 @@
 using Diploma.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Diploma.Forms
@@ -171,16 +166,12 @@ namespace Diploma.Forms
             bool res = true;
             using (DataContext context = new DataContext())
             {
-                var user = context.users.Where(u => u.login == login).FirstOrDefault();
+                var user = context.users.FromSqlRaw($"SELECT * FROM users where login = '{login}' COLLATE SQL_Latin1_General_CP1_CS_AS").FirstOrDefault();
                 if (user != null)
                 {
-                   if(String.Equals(user.login, login))
-                    {
-                        MessageBox.Show("Логин занят", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        LoginField.Focus();
-                        return res = false;
-                    }
-
+                    MessageBox.Show("Логин занят", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LoginField.Focus();
+                    return res = false;
                 }
             }
             return res;
@@ -191,7 +182,7 @@ namespace Diploma.Forms
             {
                 if (UniquenessCheck(LoginField.Text) == true)
                 {
-                    if (!String.Equals(PasswordField.Text,PasswordRepeatField.Text))
+                    if (!String.Equals(PasswordField.Text, PasswordRepeatField.Text))
                     {
                         MessageBox.Show("Пароли не совпадают", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         PasswordRepeatField.Focus();
