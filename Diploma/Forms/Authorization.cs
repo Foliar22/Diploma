@@ -1,12 +1,8 @@
 ﻿using Diploma.DAL;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Diploma.Forms
@@ -30,6 +26,7 @@ namespace Diploma.Forms
             PasswordField.ForeColor = Color.Gray;
             buttonLogin.Enabled = false;
         }
+
         #region FieldEnter
         private void LoginField_Enter(object sender, EventArgs e)
         {
@@ -106,28 +103,14 @@ namespace Diploma.Forms
             if (PasswordField.Text != "Введите пароль" && LoginField.Text != "Введите логин"
                 && PasswordField.Text != "" && LoginField.Text != "")
             {
-                try
+                if(Verification(LoginField.Text,PasswordField.Text) == true)
                 {
-                    using (DataContext context = new DataContext())
-                    {
-                        var log = LoginField.Text;
-                        var pas = PasswordField.Text;
-                        var user = context.users.Where(u => u.login == log && u.password == pas).FirstOrDefault();
-                        if (user != null)
-                        {
-                            MessageBox.Show($"Добро пожаловать!\n{log}");
-                            DialogResult = DialogResult.OK;
-                            UserID.userId = user.userId;
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Введен не правильнй логин или пароль");
-                        }
-                    }
+                    MessageBox.Show($"Добро пожаловать!\n{LoginField.Text}");
+                    DialogResult = DialogResult.OK;
                 }
-                catch(Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Введен не правильнй логин или пароль");
                 }
             }
 
@@ -139,5 +122,33 @@ namespace Diploma.Forms
             regForm.Show();
         }
         #endregion
+
+        /// <summary>
+        /// Метод проверяющий логин и пароль
+        /// </summary>
+        private bool Verification(string log, string pas)
+        {
+            try
+            {
+                using (DataContext context = new DataContext())
+                {
+                    var user = context.users.FromSqlRaw($"SELECT * FROM users where login = '{log}' COLLATE SQL_Latin1_General_CP1_CS_AS and password = '{pas}' COLLATE SQL_Latin1_General_CP1_CS_AS").FirstOrDefault();
+                    if (user != null)
+                    {
+                        UserID.userId = user.userId;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
     }
 }
